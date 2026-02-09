@@ -134,7 +134,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 10px;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
         }
@@ -169,7 +169,8 @@
         .card-detail-label {
             font-weight: 700;
             color: #004080;
-            min-width: 40px;
+            min-width: 34px;
+            flex-shrink: 0;
         }
 
         .card-view-btn {
@@ -185,7 +186,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Modal - full screen iframe like D-MAT */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -438,7 +439,6 @@
                     <span id="modalTitleText">STAFF NAME</span>
                 </h2>
                 <div class="modal-header-buttons">
-                    <button class="open-external-btn" onclick="openInNewTab()">OPEN IN NEW TAB</button>
                     <button class="close-btn" onclick="closeModal()">x</button>
                 </div>
             </div>
@@ -461,8 +461,6 @@
     <script>
         let currentStaffUrl = '';
 
-        // ── STAFF DATA ──
-        // Add the CV URL for each staff member in the "url" field
         const staff = [
             {
                 initials: "MSK", name: "Mohamed Sillah Kanu", role: "Chief Executive Officer",
@@ -535,7 +533,6 @@
 
             currentStaffUrl = p.url;
 
-            // Reset all states
             iframe.style.display = 'none';
             placeholder.style.display = 'none';
             loadingContainer.style.display = 'none';
