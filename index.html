@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICF-SL Staff CVs</title>
+    <meta name="theme-color" content="#004080">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+            font-family: 'Oswald', Arial, sans-serif;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 25px 30px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-box {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box img {
+            width: 100px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .page-header h3 {
+            margin: 12px 0 5px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .page-header .tagline {
+            margin: 0;
+            font-size: 10px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .page-header h1 {
+            margin: 20px 0 10px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .page-header .subtitle {
+            font-size: 14px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .content-card {
+            border: 4px double #004080;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #004080;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 64, 128, 0.2);
+            background: #e7f3ff;
+        }
+
+        .card-header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .card-name {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-role {
+            font-size: 10px;
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 12px 15px;
+            flex-grow: 1;
+        }
+
+        .card-detail {
+            font-size: 10px;
+            color: #333;
+            margin-bottom: 4px;
+            font-weight: 500;
+            display: flex;
+            gap: 6px;
+        }
+
+        .card-detail-label {
+            font-weight: 700;
+            color: #004080;
+            min-width: 40px;
+        }
+
+        .card-view-btn {
+            display: block;
+            text-align: center;
+            background: #004080;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px;
+            margin: 8px 15px 12px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 64, 128, 0.8);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: #ffffff;
+            width: 94%;
+            max-width: 700px;
+            max-height: 90vh;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ffffff;
+            border: none;
+            color: #004080;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #ffc107;
+            transform: rotate(90deg);
+        }
+
+        .modal-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .modal-name {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .modal-role {
+            font-size: 13px;
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 25px 30px 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .cv-section {
+            margin-bottom: 20px;
+        }
+
+        .cv-section:last-child { margin-bottom: 0; }
+
+        .cv-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #004080;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #004080;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .cv-row {
+            margin-bottom: 6px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cv-label {
+            font-weight: 700;
+            color: #004080;
+        }
+
+        .cv-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .cv-skill-tag {
+            background: #e7f3ff;
+            color: #004080;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid #004080;
+        }
+
+        .cv-summary {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .page-footer {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.7;
+            font-weight: 700;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .page-footer p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        @media (max-width: 1200px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .page-header h1 { font-size: 22px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .modal-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <div class="logo-row">
+                <div class="logo-box">
+                    <img src="https://github.com/mohamedsillahkanu/gdp-dashboard-2/raw/6c7463b0d5c3be150aafae695a4bcbbd8aeb1499/ICF-SL.jpg" alt="ICF-SL Logo">
+                </div>
+            </div>
+            <h3>Informatics Consultancy Firm-Sierra Leone<br>(ICF-SL)</h3>
+            <p class="tagline"><em>Data-Driven Solutions for Health and Development</em></p>
+            <h1>Staff Curriculum Vitae</h1>
+            <p class="subtitle">Meet Our Expert Team</p>
+        </div>
+
+        <div class="content-card">
+            <div class="cards-grid" id="cardsGrid"></div>
+        </div>
+
+        <div class="page-footer">
+            <p style="margin: 0;">National Malaria Control Programme</p>
+            <p>Ministry of Health and Sanitation, Sierra Leone</p>
+            <p style="font-size: 11px;">Medical Stores Compound, Freetown, Sierra Leone</p>
+            <p style="font-size: 10px;">© 2025 Informatics Consultancy Firm-Sierra Leone (ICF-SL)</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="staffModal" onclick="if(event.target===this)closeModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="closeModal()">x</button>
+                <div class="modal-avatar" id="modalAvatar"></div>
+                <div class="modal-name" id="modalName"></div>
+                <div class="modal-role" id="modalRole"></div>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const staff = [
+            {
+                initials: "MS", name: "Mohamed Sillah Kanu", role: "Chief Executive Officer",
+                dept: "Executive Office", email: "msillahkanu@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "MS Data Science, George Washington University; BSc Software Engineering",
+                experience: "Research Data Analyst Associate, Northwestern University Malaria Modelling Team. Over 8 years in DHIS2 implementation, health information systems, and malaria surveillance across Africa.",
+                skills: ["DHIS2", "R", "Python", "Data Analytics", "Epidemiology", "Health Systems", "Project Management"],
+                summary: "Leads ICF-SL's strategic vision and oversees all operations. Specialises in health informatics, malaria modelling, and evidence-based decision support for National Malaria Control Programmes."
+            },
+            {
+                initials: "AK", name: "Aminata Koroma", role: "Deputy Director, Operations",
+                dept: "Operations", email: "akoroma@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "MPH, University of Sierra Leone; BSc Public Health",
+                experience: "10+ years in health programme management, partner coordination, and capacity building across West Africa.",
+                skills: ["Programme Management", "Stakeholder Engagement", "M&E", "Capacity Building"],
+                summary: "Oversees daily operations, staff coordination, and project delivery timelines."
+            },
+            {
+                initials: "IB", name: "Ibrahim Bangura", role: "Senior Data Scientist",
+                dept: "Data Science", email: "ibangura@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "MSc Statistics, Njala University; BSc Mathematics",
+                experience: "6 years in statistical modelling, geospatial analysis, and epidemiological research.",
+                skills: ["R", "Python", "Geospatial Analysis", "Machine Learning", "Biostatistics"],
+                summary: "Leads advanced analytics projects including malaria incidence modelling and intervention impact evaluation."
+            },
+            {
+                initials: "AS", name: "Abdul Sesay", role: "DHIS2 Systems Lead",
+                dept: "Health Information Systems", email: "asesay@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "BSc Information Technology, IPAM-USL",
+                experience: "7 years in DHIS2 administration, metadata configuration, and system integration.",
+                skills: ["DHIS2", "PostgreSQL", "Docker", "Linux", "API Integration"],
+                summary: "Manages DHIS2 instances, metadata design, and data synchronisation pipelines for national health programmes."
+            },
+            {
+                initials: "MJ", name: "Mohamed Jalloh", role: "Full-Stack Developer",
+                dept: "Software Development", email: "mjalloh@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "BSc Software Engineering, Limkokwing University",
+                experience: "5 years building web applications, PWAs, and data collection platforms.",
+                skills: ["JavaScript", "React", "Node.js", "HTML/CSS", "Google Apps Script", "PWA"],
+                summary: "Builds and maintains ICF-SL's suite of web-based data management tools and Progressive Web Apps."
+            },
+            {
+                initials: "HT", name: "Hawa Turay", role: "Epidemiologist",
+                dept: "Epidemiology", email: "hturay@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "MSc Epidemiology, LSHTM; MBBS",
+                experience: "8 years in malaria epidemiology, case management analysis, and stratification.",
+                skills: ["Stata", "R", "Epi Analysis", "Surveillance", "Case Management"],
+                summary: "Leads epidemiological stratification, incidence analysis, and risk classification for SNT processes."
+            },
+            {
+                initials: "DK", name: "David Koroma", role: "GIS Specialist",
+                dept: "Geospatial", email: "dkoroma@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "MSc GIS & Remote Sensing, University of Nairobi; BSc Geography",
+                experience: "6 years in geospatial analysis, shapefile management, and access-to-care modelling.",
+                skills: ["QGIS", "ArcGIS", "R-Spatial", "Leaflet", "Remote Sensing"],
+                summary: "Produces geospatial outputs for intervention targeting, ITN coverage mapping, and access-to-care analysis."
+            },
+            {
+                initials: "JC", name: "John Conteh", role: "Finance & Admin Manager",
+                dept: "Admin & Finance", email: "jconteh@icf-sl.org", phone: "+232 76 XXX XXX",
+                education: "BSc Accounting, IPAM-USL; ACCA Part Qualified",
+                experience: "9 years in NGO financial management, donor reporting, and procurement.",
+                skills: ["QuickBooks", "Financial Reporting", "Budgeting", "Procurement", "HR Management"],
+                summary: "Manages ICF-SL's finances, payroll, procurement processes, and administrative operations."
+            }
+        ];
+
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = staff.map((p, i) => `
+                <div class="card" onclick="openModal(${i})">
+                    <div class="card-header">
+                        <div class="card-avatar">${p.initials}</div>
+                        <div class="card-name">${p.name.toUpperCase()}</div>
+                        <div class="card-role">${p.role}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-detail"><span class="card-detail-label">Dept:</span> ${p.dept}</div>
+                        <div class="card-detail"><span class="card-detail-label">Email:</span> ${p.email}</div>
+                    </div>
+                    <div class="card-view-btn">VIEW CV</div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(idx) {
+            const p = staff[idx];
+            document.getElementById('modalAvatar').textContent = p.initials;
+            document.getElementById('modalName').textContent = p.name;
+            document.getElementById('modalRole').textContent = p.role;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="cv-section">
+                    <div class="cv-section-title">PROFILE SUMMARY</div>
+                    <p class="cv-summary">${p.summary}</p>
+                </div>
+                <div class="cv-section">
+                    <div class="cv-section-title">CONTACT</div>
+                    <div class="cv-row"><span class="cv-label">Email: </span><span class="cv-value">${p.email}</span></div>
+                    <div class="cv-row"><span class="cv-label">Phone: </span><span class="cv-value">${p.phone}</span></div>
+                    <div class="cv-row"><span class="cv-label">Department: </span><span class="cv-value">${p.dept}</span></div>
+                </div>
+                <div class="cv-section">
+                    <div class="cv-section-title">EDUCATION</div>
+                    <div class="cv-row"><span class="cv-value">${p.education}</span></div>
+                </div>
+                <div class="cv-section">
+                    <div class="cv-section-title">EXPERIENCE</div>
+                    <div class="cv-row"><span class="cv-value">${p.experience}</span></div>
+                </div>
+                <div class="cv-section">
+                    <div class="cv-section-title">KEY SKILLS</div>
+                    <div class="cv-skills">${p.skills.map(s => `<span class="cv-skill-tag">${s}</span>`).join('')}</div>
+                </div>
+            `;
+            document.getElementById('staffModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('staffModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        renderCards();
+    </script>
+</body>
+</html>
